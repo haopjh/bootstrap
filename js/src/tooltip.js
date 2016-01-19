@@ -271,10 +271,28 @@ const Tooltip = (($) => {
           this.config.placement
 
         let attachment = this._getAttachment(placement)
-
+  
+        /* This only appends to the body instead of checking if 
+          the container field is provided */
         $(tip)
           .data(this.constructor.DATA_KEY, this)
           .appendTo(document.body)
+        /* Proposed changed, though not as short as bootstrap v3.3.6
+        
+        var container = this.config.container || document.body;
+        if(container.indexOf("#") === 0) {
+          container = container.substring(1,container.length);
+          $(tip).data(this.constructor.DATA_KEY, this).appendTo(document.getElementById(container));
+        } else if (container.indexOf("#") === 0) {
+          container = container.substring(1,container.length);
+          var divs = document.getElementByClassName(container);
+          var div = divs.length ? div[0] : document.body;
+          $(tip).data(this.constructor.DATA_KEY, this).appendTo(div);
+        } else {
+          $(tip).data(this.constructor.DATA_KEY, this).appendTo(container);
+        }
+        
+        */
 
         $(this.element).trigger(this.constructor.Event.INSERTED)
 
